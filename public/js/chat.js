@@ -13,3 +13,16 @@ document.querySelector("#message_form").addEventListener('submit', (e) => {
 socket.on('message', (message) => {
     console.log(message)
 })
+
+document.querySelector('#send_location').addEventListener('click', () => {
+    if (!navigator.geolocation) {
+        return
+    }
+
+    navigator.geolocation.getCurrentPosition((position) => {
+        socket.emit('sendLocation', {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+        })
+    })
+})
